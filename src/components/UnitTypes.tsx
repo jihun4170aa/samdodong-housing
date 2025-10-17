@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Maximize2, BedDouble, Bath, MousePointer2, Boxes, Navigation } from "lucide-react";
 import floorplan59a from "@/assets/floorplan-59a.jpg";
 import floorplan59b from "@/assets/floorplan-59b.jpg";
@@ -134,24 +135,57 @@ const UnitTypes = () => {
           </DialogHeader>
 
           <Tabs defaultValue="basic" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="basic" className="gap-2">
-                <Maximize2 className="w-4 h-4" />
-                기본 평면도
-              </TabsTrigger>
-              <TabsTrigger value="interactive" className="gap-2">
-                <MousePointer2 className="w-4 h-4" />
-                인터랙티브
-              </TabsTrigger>
-              <TabsTrigger value="3d" className="gap-2">
-                <Boxes className="w-4 h-4" />
-                3D 뷰어
-              </TabsTrigger>
-              <TabsTrigger value="tour" className="gap-2">
-                <Navigation className="w-4 h-4" />
-                가상 투어
-              </TabsTrigger>
-            </TabsList>
+            <TooltipProvider>
+              <TabsList className="grid w-full grid-cols-4 mb-6">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger value="basic" className="gap-2">
+                      <Maximize2 className="w-4 h-4" />
+                      기본 평면도
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>전통적인 2D 평면도를 확인하세요</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger value="interactive" className="gap-2">
+                      <MousePointer2 className="w-4 h-4" />
+                      인터랙티브
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>각 공간을 클릭하여 상세 정보를 확인하세요</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger value="3d" className="gap-2">
+                      <Boxes className="w-4 h-4" />
+                      3D 뷰어
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>입체적인 3D 모델로 공간을 체험하세요</p>
+                  </TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <TabsTrigger value="tour" className="gap-2">
+                      <Navigation className="w-4 h-4" />
+                      가상 투어
+                    </TabsTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>방에서 방으로 이동하며 둘러보세요</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TabsList>
+            </TooltipProvider>
 
             {/* 기본 평면도 */}
             <TabsContent value="basic" className="space-y-4">

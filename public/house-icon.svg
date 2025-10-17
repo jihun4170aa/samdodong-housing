@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- 집 지붕 -->
+  <path d="M 10 50 L 50 10 L 90 50" fill="#F9A145" stroke="#764919" stroke-width="3"/>
+
+  <!-- 집 본체 -->
+  <rect x="20" y="50" width="60" height="45" fill="#F9A145" stroke="#764919" stroke-width="2"/>
+
+  <!-- 문 -->
+  <rect x="40" y="65" width="20" height="30" fill="#764919"/>
+
+  <!-- 창문 -->
+  <rect x="25" y="60" width="10" height="10" fill="#87CEEB"/>
+  <rect x="65" y="60" width="10" height="10" fill="#87CEEB"/>
+
+  <!-- 굴뚝 -->
+  <rect x="65" y="25" width="8" height="15" fill="#764919"/>
+</svg>

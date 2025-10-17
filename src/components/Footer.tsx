@@ -10,10 +10,10 @@ const Footer = () => {
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                 <Building2 className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-foreground">그린힐 공공임대</span>
+              <span className="text-xl font-bold text-foreground">삼도이동 분양주택</span>
             </div>
             <p className="text-muted-foreground text-sm">
-              행복한 미래를 위한 프리미엄 공공임대주택
+              행복한 미래를 위한 프리미엄 분양주택
             </p>
           </div>
           
@@ -55,7 +55,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-border mt-8 pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; 2025 그린힐 공공임대. All rights reserved.</p>
+          <p>&copy; 2025 삼도이동 분양주택. All rights reserved.</p>
         </div>
       </div>
     </footer>
