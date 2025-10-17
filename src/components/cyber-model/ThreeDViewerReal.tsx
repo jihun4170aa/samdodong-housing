@@ -1,8 +1,9 @@
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF, Center, PerspectiveCamera } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Home } from "lucide-react";
+import * as THREE from "three";
 
 interface ModelProps {
   url: string;
@@ -16,6 +17,19 @@ function Model({ url }: ModelProps) {
       <primitive object={scene} scale={1} />
     </Center>
   );
+}
+
+// 카메라 위치 추적 컴포넌트
+function CameraTracker({ onPositionChange }: { onPositionChange: (pos: [number, number, number]) => void }) {
+  useFrame(({ camera }) => {
+    const pos = camera.position;
+    onPositionChange([
+      Math.round(pos.x * 10) / 10,
+      Math.round(pos.y * 10) / 10,
+      Math.round(pos.z * 10) / 10
+    ]);
+  });
+  return null;
 }
 
 // 간단한 아파트 대체 모델 (GLB 파일이 없을 경우)
@@ -98,6 +112,8 @@ interface ThreeDViewerRealProps {
 }
 
 const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
+  const [cameraPosition, setCameraPosition] = useState<[number, number, number]>([3, 3, 3]);
+
   const resetCamera = () => {
     // OrbitControls를 리셋하는 방법은 ref를 통해 접근해야 하지만,
     // 간단하게 페이지를 새로고침하거나 키를 변경하여 컴포넌트를 재마운트
@@ -140,6 +156,9 @@ const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
               <Environment preset="apartment" />
             </Suspense>
 
+            {/* 카메라 위치 추적 */}
+            <CameraTracker onPositionChange={setCameraPosition} />
+
             {/* 카메라 컨트롤 */}
             <OrbitControls
               enablePan={true}
@@ -166,9 +185,14 @@ const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
         </div>
 
         {/* 정보 배지 */}
-        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full shadow-lg">
-          <Home className="w-4 h-4 inline mr-2" />
-          {unitType}형
+        <div className="absolute top-4 right-4 flex flex-col gap-2">
+          <div className="bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full shadow-lg">
+            <Home className="w-4 h-4 inline mr-2" />
+            {unitType}형
+          </div>
+          <div className="bg-primary/90 backdrop-blur-sm text-white px-4 py-2 rounded-lg shadow-lg text-xs font-mono">
+            📹 카메라: [{cameraPosition[0]}, {cameraPosition[1]}, {cameraPosition[2]}]
+          </div>
         </div>
       </div>
 
