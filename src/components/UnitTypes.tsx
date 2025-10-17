@@ -227,7 +227,10 @@ const UnitTypes = () => {
             {/* 3D 뷰어 */}
             <TabsContent value="3d">
               {selectedUnit && (
-                <ThreeDViewerReal unitType={selectedUnit.type} />
+                <ThreeDViewerReal
+                  unitType={selectedUnit.type}
+                  modelUrl="/demo.glb"
+                />
               )}
             </TabsContent>
 
