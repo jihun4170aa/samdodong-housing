@@ -109,7 +109,7 @@ const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
       <div className="relative">
         <div className="w-full h-[600px] rounded-lg overflow-hidden bg-gradient-to-br from-muted to-background border-2 border-border">
           <Canvas shadows>
-            <PerspectiveCamera makeDefault position={[5, 4, 5]} fov={50} />
+            <PerspectiveCamera makeDefault position={[3, 3, 3]} fov={50} />
 
             {/* 조명 */}
             <ambientLight intensity={0.5} />
