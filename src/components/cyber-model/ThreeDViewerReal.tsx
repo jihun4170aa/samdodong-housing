@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useState, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Environment, useGLTF, Center, PerspectiveCamera } from "@react-three/drei";
 import { Button } from "@/components/ui/button";
@@ -112,20 +112,19 @@ interface ThreeDViewerRealProps {
 }
 
 const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
-  const [cameraPosition, setCameraPosition] = useState<[number, number, number]>([3, 3, 3]);
+  const [cameraPosition, setCameraPosition] = useState<[number, number, number]>([1, 1, 1]);
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   const resetCamera = () => {
-    // OrbitControls를 리셋하는 방법은 ref를 통해 접근해야 하지만,
-    // 간단하게 페이지를 새로고침하거나 키를 변경하여 컴포넌트를 재마운트
-    window.location.reload();
+    setResetTrigger(prev => prev + 1);
   };
 
   return (
     <div className="w-full">
       <div className="relative">
         <div className="w-full h-[600px] rounded-lg overflow-hidden bg-gradient-to-br from-muted to-background border-2 border-border">
-          <Canvas shadows>
-            <PerspectiveCamera makeDefault position={[3, 3, 3]} fov={50} />
+          <Canvas shadows key={resetTrigger}>
+            <PerspectiveCamera makeDefault position={[1, 1, 1]} fov={50} />
 
             {/* 조명 */}
             <ambientLight intensity={0.5} />
@@ -164,8 +163,8 @@ const ThreeDViewerReal = ({ unitType, modelUrl }: ThreeDViewerRealProps) => {
               enablePan={true}
               enableZoom={true}
               enableRotate={true}
-              minDistance={5}
-              maxDistance={30}
+              minDistance={0.5}
+              maxDistance={50}
               maxPolarAngle={Math.PI / 2}
             />
           </Canvas>
