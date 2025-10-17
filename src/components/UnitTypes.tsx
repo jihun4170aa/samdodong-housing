@@ -2,11 +2,15 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Maximize2, BedDouble, Bath } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Maximize2, BedDouble, Bath, MousePointer2, Boxes, Navigation } from "lucide-react";
 import floorplan59a from "@/assets/floorplan-59a.jpg";
 import floorplan59b from "@/assets/floorplan-59b.jpg";
 import floorplan74 from "@/assets/floorplan-74.jpg";
 import floorplan84 from "@/assets/floorplan-84.jpg";
+import InteractiveFloorPlan from "./cyber-model/InteractiveFloorPlan";
+import ThreeDViewerReal from "./cyber-model/ThreeDViewerReal";
+import VirtualTour from "./cyber-model/VirtualTour";
 
 interface UnitType {
   type: string;
@@ -121,35 +125,88 @@ const UnitTypes = () => {
       </section>
 
       <Dialog open={!!selectedUnit} onOpenChange={() => setSelectedUnit(null)}>
-        <DialogContent className="max-w-4xl">
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">{selectedUnit?.type}형 평면도</DialogTitle>
+            <DialogTitle className="text-2xl">{selectedUnit?.type}형 사이버 모델하우스</DialogTitle>
+            <p className="text-muted-foreground">
+              세 가지 방식으로 평면도를 체험해보세요
+            </p>
           </DialogHeader>
-          <div className="space-y-4">
-            <img 
-              src={selectedUnit?.floorplan} 
-              alt={`${selectedUnit?.type}형 평면도`}
-              className="w-full rounded-lg"
-            />
-            <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">전용면적</p>
-                <p className="text-xl font-semibold text-foreground">{selectedUnit?.area}</p>
+
+          <Tabs defaultValue="basic" className="w-full">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsTrigger value="basic" className="gap-2">
+                <Maximize2 className="w-4 h-4" />
+                기본 평면도
+              </TabsTrigger>
+              <TabsTrigger value="interactive" className="gap-2">
+                <MousePointer2 className="w-4 h-4" />
+                인터랙티브
+              </TabsTrigger>
+              <TabsTrigger value="3d" className="gap-2">
+                <Boxes className="w-4 h-4" />
+                3D 뷰어
+              </TabsTrigger>
+              <TabsTrigger value="tour" className="gap-2">
+                <Navigation className="w-4 h-4" />
+                가상 투어
+              </TabsTrigger>
+            </TabsList>
+
+            {/* 기본 평면도 */}
+            <TabsContent value="basic" className="space-y-4">
+              <img
+                src={selectedUnit?.floorplan}
+                alt={`${selectedUnit?.type}형 평면도`}
+                className="w-full rounded-lg"
+              />
+              <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">전용면적</p>
+                  <p className="text-xl font-semibold text-foreground">{selectedUnit?.area}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">공급세대</p>
+                  <p className="text-xl font-semibold text-foreground">{selectedUnit?.units}세대</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">방 개수</p>
+                  <p className="text-xl font-semibold text-foreground">{selectedUnit?.rooms}개</p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground mb-1">욕실 개수</p>
+                  <p className="text-xl font-semibold text-foreground">{selectedUnit?.bathrooms}개</p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">공급세대</p>
-                <p className="text-xl font-semibold text-foreground">{selectedUnit?.units}세대</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">방 개수</p>
-                <p className="text-xl font-semibold text-foreground">{selectedUnit?.rooms}개</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">욕실 개수</p>
-                <p className="text-xl font-semibold text-foreground">{selectedUnit?.bathrooms}개</p>
-              </div>
-            </div>
-          </div>
+            </TabsContent>
+
+            {/* 인터랙티브 평면도 */}
+            <TabsContent value="interactive">
+              {selectedUnit && (
+                <InteractiveFloorPlan
+                  floorplanImage={selectedUnit.floorplan}
+                  unitType={selectedUnit.type}
+                />
+              )}
+            </TabsContent>
+
+            {/* 3D 뷰어 */}
+            <TabsContent value="3d">
+              {selectedUnit && (
+                <ThreeDViewerReal unitType={selectedUnit.type} />
+              )}
+            </TabsContent>
+
+            {/* 가상 투어 */}
+            <TabsContent value="tour">
+              {selectedUnit && (
+                <VirtualTour
+                  floorplanImage={selectedUnit.floorplan}
+                  unitType={selectedUnit.type}
+                />
+              )}
+            </TabsContent>
+          </Tabs>
         </DialogContent>
       </Dialog>
     </>

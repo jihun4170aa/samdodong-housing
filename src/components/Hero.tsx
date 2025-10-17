@@ -1,5 +1,4 @@
-import { Building2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Building2, Home, FileText, User, Bell, Phone } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
@@ -7,48 +6,59 @@ const Hero = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const quickMenuItems = [
+    { icon: Home, label: "계약현황", href: "#" },
+    { icon: FileText, label: "보증금조회", href: "#" },
+    { icon: User, label: "임대료조회", href: "#" },
+    { icon: Bell, label: "고지서재발급", href: "#" },
+    { icon: Phone, label: "주택수선안내", href: "#" },
+    { icon: Building2, label: "퇴거안내", href: "#" },
+  ];
+
   return (
-    <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-      <div 
+    <section className="relative h-[627px] overflow-hidden">
+      <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 to-primary/60" />
+        <div className="absolute inset-0 bg-black/40" />
       </div>
-      
-      <div className="relative z-10 container mx-auto px-4 text-center text-white">
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm">
-          <Building2 className="w-5 h-5" />
-          <span className="text-sm font-medium">공공임대주택</span>
+
+      <div className="relative z-10 container mx-auto px-4 h-full flex items-center">
+        <div className="max-w-2xl text-white">
+          <p className="text-lg mb-3">
+            <strong className="text-primary text-3xl">H</strong>armony, <strong className="text-primary text-3xl">H</strong>opeful, <strong className="text-primary text-3xl">W</strong>arm-<strong className="text-primary text-3xl">H</strong>earted
+          </p>
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-5 leading-tight">
+            미래를 품은 집 <strong className="text-primary">'마음에 온'</strong>
+          </h1>
+          <p className="text-lg md:text-xl text-white/90">
+            입주자들의 주거안정을 통해 가족, 자신의 미래를 안정적으로<br/>
+            설계할 수 있게 해주는 집! <strong>'마음에 온'</strong>
+          </p>
         </div>
-        
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-          품격있는 주거공간
-          <br />
-          <span className="bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
-            행복한 미래를 위한 선택
-          </span>
-        </h1>
-        
-        <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-2xl mx-auto">
-          편리한 입지와 쾌적한 환경이 조화를 이루는 프리미엄 공공임대주택
-        </p>
-        
-        <div className="flex gap-4 justify-center flex-wrap">
-          <Button 
-            size="lg" 
-            className="bg-primary text-white hover:bg-primary/90 shadow-lg font-semibold"
-            onClick={() => scrollToSection("unit-types")}
-          >
-            세대정보 보기
-          </Button>
-          <Button 
-            size="lg" 
-            className="bg-secondary text-white hover:bg-secondary/90 shadow-lg font-semibold"
-            onClick={() => scrollToSection("complex-info")}
-          >
-            단지안내
-          </Button>
+
+        {/* 오른쪽 오버레이 메뉴 */}
+        <div className="absolute right-0 top-24 w-[405px] h-[465px] bg-black/70 backdrop-blur-sm rounded-l-lg hidden lg:block">
+          <div className="p-8">
+            <div className="border-b border-primary pb-4 mb-6">
+              <h3 className="text-2xl font-bold text-white">입주자</h3>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              {quickMenuItems.map((item, idx) => (
+                <a
+                  key={idx}
+                  href={item.href}
+                  className="flex flex-col items-center gap-3 p-3 rounded-lg hover:bg-white/10 transition-colors group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary transition-colors">
+                    <item.icon className="w-8 h-8 text-primary group-hover:text-white transition-colors" />
+                  </div>
+                  <span className="text-sm text-white text-center">{item.label}</span>
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
